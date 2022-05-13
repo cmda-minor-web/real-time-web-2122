@@ -1,0 +1,14 @@
+body{
+    background-color: #bde0fe;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main{
+    display: grid;
+    place-items: center;
+    margin-top: 200px;
+}
+
+form input{
+    text-transform: uppercase;
+}

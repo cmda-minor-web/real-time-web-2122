@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribble Game</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+
+    <main>
+    <h1>Scribble Game</h1>
+    <h3> Your word is: <%= data %></h3>
+
+      <div>
+        <section class="tekenVeld">
+          <input type="color"  class="js-color-picker  color-picker">
+          <input type="range" class="js-line-range" min="1" max="72" value="1">
+          <label class="js-range-value">1</label>Px
+          <canvas class="js-paint  paint-canvas" width="600" height="500"></canvas>
+        </section>
+
+
+        <section class="woordRaden">
+            <h2>Guess the word</h2>
+            <ul></ul>
+            <form>
+                <input type="text" autocomplete="off" placeholder="Type your guess...">
+                <button>Send</button>
+            </form>
+        </section>
+      </div>
+
+  
+    </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="scripts/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #bde0fe;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div{
+    display: flex;
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 8px;
+    background-color: white;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 15px #003049;
+    border-radius: 10% 10% 10% 10% / 50% 50% 50% 50%;
+}
+
+h3{
+    text-align: center;
+}
+
+/* Chat styling */
+h2{
+    text-align: center;
+    margin-top: 10px;
+}
+
+section.woordRaden{
+    background-color: #219ebc;
+    width: 350px;
+    height: 503px;
+    position: relative;
+    margin-top: 60px;
+    border: solid black 2px;
+}
+
+ul{
+    margin-top: 20px;
+    width: 100%;
+    height: 400px;
+    overflow: scroll;
+    position: relative;
+}
+
+ul li{
+    background-color: white;
+    padding: 6px;
+    width: fit-content;
+    max-width: 180px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    align-items: center;
+    margin-left: 130px;
+    margin-bottom: 10px;
+}
+
+/* Username */
+li:before{
+    content: attr(username);
+    position: absolute;
+    left: 0;
+    margin-left: 35px;
+    color: white;
+    text-transform: uppercase;
+}
+
+form{
+    position: absolute;
+    bottom: 3px;
+    display: block;
+}
+
+form input{
+    width: 280px;
+    height: 30px;
+    border-radius: 5% 5% 5% 5% / 50% 50% 50% 50%;
+    border: black solid 2px;
+    padding: 0px 35px 0px 35px;
+}
+
+button{
+    color: #eae2b7;
+    background-color: #003049;
+    border: none;
+    padding: 8px;
+    font-weight: 900;
+    font-size: 16px;
+    border-radius: 25% 25% 25% 25% / 50% 50% 50% 50%;
+    cursor: pointer;
+}
+
+button:hover{
+    color: #003049;
+    background-color: #eae2b7;
+}
+
+/* Tekenveld styling */
+canvas{
+    background-color: white;
+    cursor: crosshair;
+}
+
+.paint-canvas {
+    border: 2px black solid;
+    display: block;
+    margin: 1rem;
+  }
+  
+.color-picker {
+    margin: 1rem 1rem 0 1rem;
+  }
+
+  

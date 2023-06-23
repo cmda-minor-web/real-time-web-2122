@@ -1,154 +1,154 @@
-# Real-Time Web @cmda-minor-web 2021 - 2022
+![header of Solar Discovery](readme-images/header.png)
+
+# Solar Discovery
 
 ## Table of Contents
-- [Synopsis](#synopsis)
-- [Description](#description)
-- [Communication](#communication)
-- [Goals](#goals)
-- [Grading](#grading)
-- [Programme](#programme)
+- [Concept](#concept)
+- [API](#api)
+- [Features](#features)
+- [Real Time Events](#real-time-events)
+- [Data Life Cycle](#data-life-cycle)
 
-## Synopsis
-- Course: Real-Time Web
-- Course Coordinator: Justus Sturkenboom ([@ju5tu5](https://github.com/ju5tu5))
-- Minor Coordinator(s): Joost Faber ([@joostf](https://github.com/joostf)) Koop Reynders ([@KoopReynders](https://github.com/KoopReynders))
-- Lecturers: Shyanta Vleugel ([@shyanta](https://github.com/shyanta)) & Justus Sturkenboom ([@ju5tu5](https://github.com/ju5tu5))
-- Student Assistants: Daan Korver ([@daankorver](https://github.com/DaanKorver))
-- Credit: 3 ECTS credits
-- Academic year: 2021-2022
-- Programme: Communication and Multimedia Design (full time bachelor)
-- Language: Dutch instructions and English resources
+## Concept
+Isn't space awesome? Well I think it is. That is why I made a multiplayer game where you can fly in space with your own rocket and discover planets. The solar system in this game is a real scale model of our solar system using an API that gives data about every planet and all of there moons.
 
-## Description
-During this course you will learn how to build a real-time application. You will learn techniques to setup an open connection between the client and the server. This will enable you to send data in real-time both ways, at the same time.
+[https://solar-discovery.herokuapp.com/](https://solar-discovery.herokuapp.com/)
 
-## Communication
-- [Github](https://github.com/cmda-minor-web/real-time-web-2122)
-- [Microsoft Teams](https://teams.microsoft.com/l/channel/19%3a2b5ac900b14c4b68a31dc5dbb380dcbe%40thread.tacv2/06%2520-%2520Real%2520Time%2520web)
-- [Brightspace](https://dlo.mijnhva.nl/d2l/home/324147)
+## API
+The [L'OpenData du Système Solaire](https://api.le-systeme-solaire.net/en/) is a French API. Luckely they have an English page so I could still understand how to use it. This API can be called using [https://api.le-systeme-solaire.net/rest/bodies/](https://api.le-systeme-solaire.net/rest/bodies/). It is a really simple API.
 
-If you have questions:
-- [Look at the additional resources]()
-- [Use a search engine like startpage](https://www.startpage.com/)
-- [Ask questions on MS Teams](https://teams.microsoft.com/l/channel/19%3a2b5ac900b14c4b68a31dc5dbb380dcbe%40thread.tacv2/06%2520-%2520Real%2520Time%2520web) (please help each other!)
-- [Contact a student-assisstant](#synopsis)
-- [Contact a lecturer](#synopsis)
+### Available data
+| #  | Name            | Type       | Content                                                                              |
+|----|-----------------|------------|--------------------------------------------------------------------------------------|
+| 1  | id              | string     | Id of body in the API.                                                               |
+| 2  | name            | string     | Body name (in french).                                                               |
+| 3  | englishName     | string     | English name.                                                                        |
+| 4  | isPlanet        | boolean    | Is it a planet?                                                                      |
+| 5  | moons           | array      | Table with all moons.                                                                |
+| 6  | semimajorAxis   | integer    | Semimajor Axis of the body in kilometres.                                            |
+| 7  | perihelion      | integer    | Perihelion in kilometres.                                                            |
+| 8  | aphelion        | integer    | Aphelion in kilometres.                                                              |
+| 9  | eccentricity    | decimal    | Orbital eccentricity.                                                                |
+| 10 | inclination     | decimal    | Orbital inclination in degrees.                                                      |
+| 11 | mass            | object     | Boby mass in 10n kg.                                                                 |
+| 12 | vol             | object     | Body volume in 10n km3.                                                              |
+| 13 | density         | decimal    | Body density in g.cm3.                                                               |
+| 14 | gravity         | decimal    | Surface gravity in m.s-2.                                                            |
+| 15 | escape          | decimal    | Escape speed in m.s-1.                                                               |
+| 16 | meanRadius      | integer    | Mean radius in kilometres.                                                           |
+| 17 | equaRadius      | integer    | Equatorial radius in kilometres.                                                     |
+| 18 | polarRadius     | integer    | Polar radius in kilometres.                                                          |
+| 19 | escape          | flattening | Flattening.                                                                          |
+| 20 | dimension       | string     | Body dimension on the 3 axes X, Y et Z for non-spherical bodies.                     |
+| 21 | sideralOrbit    | decimal    | Sideral orbital time for body around another one (the Sun or a planet) in earth day. |
+| 22 | sideralRotation | decimal    | Sideral rotation, necessary time to turn around itself, in hour.                     |
+| 23 | aroundPlanet    | object     | For a moon, the planet around which it is orbiting.                                  |
+| 24 | discoveredBy    | string     | Discovery name.                                                                      |
+| 25 | discoveryDate   | string     | Discovery date.                                                                      |
+| 26 | alternativeName | string     | Temporary name.                                                                      |
+| 27 | axialTilt       | decimal    | Axial tilt.                                                                          |
+| 28 | avgTemp         | integer    | Mean temperature in K.                                                               |
+| 29 | mainAnomaly     | decimal    | Mean anomaly in degree.                                                              |
+| 30 | argPeriapsis    | decimal    | Argument of perihelion in degree.                                                    |
+| 31 | longAscNode     | decimal    | Longitude of ascending node in degree.                                               |
+| 32 | bodyType        | string     | The body type : Star, Planet, Dwarf Planet, Asteroid, Comet or Moon.                 |
 
-## Goals
-After finishing this program you can:
-- _deal with real-time complexity;_
-- _handle real-time client-server interaction;_
-- _handle real-time data management;_
-- _handle multi-user support._
+### Used Data
+- **englishName** I use the English name of every planet to give every image an `id` for giving every planet the right width and distance from the sun.
+- **isPlanet** I use the isPlanet `boolean` to check if every item is a planet so I could filter the moons out of the array.
+- **perihelion** I use the perihelion to calculate the distance between every planet and the sun so I could position every planet using `element.style.setProperty('left', ...)`.
+- **meanRadius** Used to calculate the size of every planet so I could set every the width using `element.style.setProperty('width', ...)`.
+- **sideralOrbit** Used to calculate the speed of every planets rotation around the sun to set the `element.style.setProperty('transform', 'rotate(...deg')`.
 
-## Grading
-Your efforts will be graded using a single point rubric (see below). You will have to pass the criterion (centre column) to pass the course. During the test you will be consulted and will be given feedback on things we think deficient and things we think are an improvement on the criterion.
+*Sadly this API did not include any images at all, but luckely two years ago I remade every planet from our solar system in illustrator. So I placed these images in the images folder and gave the files the name of every **englishName** to create images using the API in ejs like so: `<img class="planet" id="<%= asset.englishName %>" src="img/planets/<%= asset.englishName %>.svg">`*
 
-| Deficiency | Criterion | Improvement |
-|:--|:--|:--|
-|  | *Project* Your app is working and published on Heroku. Your project is thoroughly documented in the `README.md` file in your repository. Included are a description of the data-lifecycle, real-time events and external data source used by your app. |  |
-|  | *Complexity* You’ve implemented enough real-time functionality for us to test your comprehension of the subject. A lot of functionality is self-written. You are able to manipulate online examples live. |  |
-|  | *Client-server interaction* By interacting with the app, a user can influence the data model of the server in real time by directly modifying data OR by influencing API requests between server and source. The student has set up the data manipulations. |  |
-|  | *Data management* The server maintains a data model and each client is continuously updated with the correct data. |  |
-|  | *Multi-user support* Multiple clients can connect to the server. Interaction works as expected and is not dependent on the number of clients. You can explain how your app approaches this. |  |
+## Features
 
-## Programme
+### Current Features
+- [x] Create username
+- [x] Move rocket by mouse (mouse further from rocket means faster!)
+- [x] Toggle movement by pressing `Space`
+- [x] Rotate rocket to mouse position
+- [x] Coördinates of rocket (top left of screen)
+- [x] Planets are positioned using the API for a real scale model of our solar system (using **perihelion**)
+- [x] Planets orbit around the sun using `transform: rotate()` (using **sideralOrbit**)
+- [x] Pinpoints for every planet so you can always find every planet
+- [x] Multiple users can join.
+- [x] Updating position and rotation of every rocket to every client
 
-### Daily Schedule
-To keep things simple we use a daily schedule that will be used during normal course days (monday/tuesday). We make exceptions for fridays, on these days a different schedule will be given.
+### Future Features
+- [x] Updating position of every planet to every client (every client has their own planet rotation. Info needs to be send using sockets) 🌍
+- [ ] A chat in the left bottom corner so people can actually talk to each other 😊
+- [ ] Changing the "lightspeed" of your rocket so you can travel faster and slower ⚡️
+- [ ] Create your own rocket 🚀
+- [ ] Fire of rocket only appears when you actually fly 🔥
+- [ ] Adding aliens, meteor showers, satellites and maybe the Tesla car in space? 👽 ☄️ 🛰
+- [ ] Less consistent stars background ✨
+- [ ] Add moons to the planets 🌙
 
-| Time | Who | Activity |
-|:--|:--|:--|
-| *~09:00* | *(Shyanta, Justus)* | *Standup* |
-| 09:30 | Tribe *+(Shyanta, Justus)* | Talk with crucial information (make sure you attend!) |
-| 11:00 | Tribe | Work on the (day)assignment |
-|  | Team 1 *+(Shyanta)* | Standup |
-|  | Team 2 *+(Justus)* | Standup |
-| 11:20 | Team 3 *+(Shyanta)* | Standup |
-|  | Team 4 *+(Justus)* | Standup |
-| 11.40 | Team 5 *+(Shyanta)* | Standup |
-|  | Team 6 *+(Justus)* | Standup |
-| 12.00 | Team 7 *+(Shyanta)* | Standup |
-|  | Team 8 *+(Justus)* | Standup |
-| 12.20 | Team 9 *+(Shyanta)* | Standup |
-|  | Team 20 *+(Justus)* | Standup |
-| 13:00 | Tribe *+(Daan, Justin)* | Continue work on the (day)assignment |
-| 16:00ish | Tribe | Wrapup |
+### Bug fixes I want to do
+- [x] Pinpoints move kind of buggy (the faster you go, the more they bug) *UPDATE: it is a little bit better now (but still not optimal)*
+- [ ] Movement and rotation of other players is lagging
+- [x] Sometimes no rocket is shown when joining with username
+- [ ] If user is on start menu and a new user joins, the rocket of the new user is in front of form 
+- [ ] Just refactoring my code, client side javascript is kind of messy
 
-### Week 1 - Getting a grip
-Goal: Build and deploy a simple but unique real-time app
+## Real Time Events
 
-#### Tuesday 19 April 
-**Talk subjects:** Hit the ground running... [(slides)](https://docs.google.com/presentation/d/1Z-zOIDvFB0P2qGHV0F74n9T4kprgybJ_8GYU-1MaKfM/edit?usp=sharing) Course objective and explanation of the assignment, examples from last year, explanation of real-time, (live coded) bare bone chat app and deployment on Heroku.\
-**Day assignment:** [(assignment)](./course/week-1.md#assignment-1-make-it-so) Make it so *(as a team)*: Implement (code/style/discuss/deploy) basic chat (or other realtime) functionality on your teampage!
+### Connection
+When connecting to the server an array of every user online is rendered in ejs. Also the position of every users rocket is sent and kept updated.
+```
+io.on('connection', function (socket) {
+    socket.emit('data', newData);
+    socket.on('new user', username => {
+        let object = {username: username, id: socket.id};
+        userList.push(object);
+        io.emit("new user", object);
+    })
+    socket.on('position', pos => {
+        io.emit("position", pos);
+    })
+    socket.on('disconnect', () => {
+        io.emit('user left', {id: socket.id})
+        userList = userList.filter(user => user.id !== socket.id );
+    })
+});
+```
 
-#### Friday 22 April
-**Talk subjects:** My first realtime web app! [(slides)](https://docs.google.com/presentation/d/18eftO3epzIXDjdwl3cn5Wq99fkQYCUnExUqq9P72A3k/edit?usp=sharing) Short recap, (local) data management, using (wire) flows for realtime web apps, (live coded) multi-user woordzoeker.\
-**Day assignment:** [(assignment)](./course/week-1.md#assignment-2-make-it-so) Make it so *(individually)*. i) Create (code/style/discuss/deploy) a chat app (or other realtime functionality) based on the examples and ii) add your own unique feature!
+### New user
+If a user puts in a username and submits the form, the name of the user is sent to the server.
+```
+userForm.addEventListener('submit', e => {
+    if (usernameInput.length > 0) {
+        socket.emit('new user', usernameInput);
+    }
+});
+```
+The server pushes the username and the socket id of the client into an array and sends the object back to every client.
+```
+socket.on('new user', username => {
+    let object = {username: username, id: socket.id};
+    userList.push(object);
+    io.emit("new user", object);
+})
+```
 
-### Week 2 - Sockets and data
-Goal: Store, manipulate and share data between server-client   
+### Disconnect
+When a user disconnects from the server the user gets removed from the users array and client side being removed for every client.
+```
+socket.on('disconnect', () => {
+    io.emit('user left', {id: socket.id})
+    userList = userList.filter(user => user.id !== socket.id );
+})
 
-#### Monday 25 April
-**Talk subjects:** Data driven development?! [(slides)](https://docs.google.com/presentation/d/1WC1DxkQm2eUCTQp7dEfv0cTVMK7zlg3der0P0qP7S5I/edit?usp=sharing) Feedback about last week, final assignment and conditions (rubric), explanation of data management, (live coded) Long polling vs Websockets. \
-**Day assignment:** [(assignment)](./course/week-2.md#assignment-1-proof-of-concept) (Proof of) Concept *(individually)*. i) Create a (3 > 1) concept based on existing data from an API and ii) map this data using modelling techniques.
+socket.on('user left', user => {
+    document.querySelector(`#${user.id}`).remove()
+});
+```
 
-#### Tuesday 26 April
-**Talk subjects:** Above all else, show the data. [(slides)](https://docs.google.com/presentation/d/1tW4klrDjt1AfWte311uKkfQYwaHwokzQ-ue3a4VphqA/edit?usp=sharing) Securing real-time web apps, offline support, the publication/subscription model and (case study) Quek!\
-**Day assignment:** [(assignment)](./course/week-2.md#assignment-2-proof-of-concept) Proof of concept *(individually)*: i) Create (code/style/discuss/deploy) part of the core functionality for your concept and ii) show the  corresponding data lifecycle diagram.
+## Data Life Cycle
 
-#### Friday 29 April
-Instead of our talk we will have a [peer review session](./course/peer-review.md). You will read, comment and fire issues on each others code. Doing this is really good for your programming insight and helps others refining/refactoring their code.
-
-| Time | Who | Activity |
-|:--|:--|:--|
-| | Tribe *+(Shyanta, Justus)* | Peer review |
-
-### Week 3 - Dealing with multiple users
-Goal: Handle data sharing and multi-user support 
-
-#### Monday 9 May
-**Talk subjects:** Roll your own... [(slides) ](https://docs.google.com/presentation/d/1Cx9qCo8QQXH5Btbtwg0L61so-wn2OxFQZdphIhbumQk/edit?usp=sharing) Data management, the functional programming trinity (map, filter and reduce). OAuth?!
-**Day assignment:** [(assignment)](./course/week-3.md#assignment-1-data-management)
-
-#### Tuesday 10 May
-**Talk subjects:** Not ignoring the UI-Stack! [(slides)](https://docs.google.com/presentation/d/1ACuUJ-B19hgFN2CCTYH8ClN0WD69ok8ZVnkRGbU0FjA/edit?usp=sharing). Usability, feedback, feedforward etc. in real-time web apps, (case study) postNL loader and FAQ.
-**Day assignment:** [(assignment)](./course/week-3.md#assignment-2-user-testing)
-
-#### Friday 13 May
-We will have our final [peer review session](./course/peer-review.md). You will read, comment and fire issues on each others code. Doing this helps others dotting the i’s on their project.
-
-| Time | Who | Activity |
-|:--|:--|:--|
-| | Tribe *+(Shyanta, Justus)* | Peer review |
-| | Tribe *+(Shyanta, Justus)* | Finalize your assignment |
-| 16.00 | Tribe *+(Shyanta, Justus)* | (drinks?!) |
+![Data Life Cycle](readme-images/life-cycle.png)
 
 
-<!-- Here are some hints for your project! -->
-
-<!-- Start out with a title and a description -->
-
-<!-- Add a nice image here at the end of the week, showing off your shiny frontend 📸 -->
-
-<!-- Add a link to your live demo in Github Pages 🌐-->
-
-<!-- replace the code in the /docs folder with your own, so you can showcase your work with GitHub Pages 🌍 -->
-
-<!-- Maybe a table of contents here? 📚 -->
-
-<!-- ☝️ replace this description with a description of your own work -->
-
-<!-- How about a section that describes how to install this project? 🤓 -->
-
-<!-- ...but how does one use this project? What are its features 🤔 -->
-
-<!-- What external data source is featured in your project and what are its properties 🌠 -->
-
-<!-- This would be a good place for your data life cycle ♻️-->
-
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
-
-<!-- We all stand on the shoulders of giants, please link all the sources you used in to create this project. -->
-
-<!-- How about a license here? When in doubt use GNU GPL v3. 📜  -->
+> _Fun fact: the port used for this site is the year in which the first person ever went into space!_

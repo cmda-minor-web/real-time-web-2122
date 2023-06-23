@@ -1,0 +1,39 @@
+<%- include('./partials/head') %>
+<header>
+    <h2>Coördinates</h2>
+    <ul>
+        <li>x: 0</li>
+        <li>y: 0</li>
+    </ul>
+</header>
+<main>
+    <% data.forEach(asset => { %>
+    <img class="planet" id="<%= asset.englishName %>" src="img/planets/<%= asset.englishName %>.svg">
+    <div class="pinpoint" id="<%= asset.englishName %>">
+        <img src="img/planets/<%= asset.englishName %>.svg">
+        <h3><%= asset.englishName %></h3>
+    </div>
+    <% }) %>
+    <div class="startmenu">
+        <section>
+            <img src="img/planets/Sun.svg" alt="The sun with its orange and red lava looking colors">
+            <h1>SOLAR DISCOVERY</h1>
+        </section>
+        <form class="username-form">
+            <label for="username-input">Choose username</label>
+            <input maxlength="25" id="username-input" name="username" placeholder="Username"></input>
+            <button>Join Game</button>
+        </form>
+    </div>
+    <% users.forEach(user => { %>
+    <section id="<%= user.id %>" class="rocketWrap">
+        <h3><%= user.username %></h3>
+        <img class="rocket" src="img/rocket.gif" alt="A cool black with red rocket flying through space">
+    </section>
+    <% }) %>
+</main>
+<footer>
+    <p>Press space to toggle flying!</p>
+</footer>
+
+<%- include('./partials/foot') %>
